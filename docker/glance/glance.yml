@@ -97,7 +97,7 @@ pages:
                   <ul>
                     {{ range .JSON.Array "" }}
                       <li>
-                        <a href="{{ .String "html_url" }}" target="_blank" style="color:white;">{{ .String "commit.message" }}</a>
+                        <a href="{{ .String "html_url" }}" target="_blank" style="color:white;">{{ .String "title" }}</a>
                       </li>
                     {{ end }}
                     <li>
