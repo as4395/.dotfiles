@@ -1,0 +1,112 @@
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+          - type: rss
+            title: RSS FEED
+            limit: 5
+            collapse-after: 3
+            feeds:
+              - url: https://rss.nytimes.com/services/xml/rss/nyt/HomePage.
+              - url: https://feeds.feedburner.com/TechCrunch/
+          - type: group
+            title: REPOSITORY
+            widgets:
+              - type: custom-api
+                title: repository
+                url: https://api.github.com/repos/vercel/next.js
+                cache: 5m
+                headers:
+                  User-Agent: Glance-Dashboard
+                template: |
+                  <p><strong>Name:</strong> {{ .JSON.String "full_name" }}</p>
+                  <p><strong>Stars:</strong> {{ .JSON.Int "stargazers_count" }}</p>
+                  <p><strong>Forks:</strong> {{ .JSON.Int "forks_count" }}</p>
+              - type: custom-api
+                title: last 3 commits
+                url: https://api.github.com/repos/vercel/next.js/commits?per_page=3
+                cache: 5m
+                headers:
+                  User-Agent: Glance-Dashboard
+                template: |
+                  <ul>
+                    {{ range .JSON.Array "" }}
+                      <li>
+                        <a href="{{ .String "html_url" }}" target="_blank" style="color:white;">{{ .String "commit.message" }}</a>
+                      </li>
+                    {{ end }}
+                  </ul>
+      - size: full
+        widgets:
+          - type: markets
+            markets:
+              - symbol: QQQ
+                name: Nasdaq-100 ETF
+              - symbol: AAPL
+                name: Apple Inc.
+              - symbol: ETH-USD
+                name: Ethereum
+              - symbol: AMZN
+                name: Amazon.com Inc.
+          - type: videos
+            channels:
+              - UCsXVk37bltHxD1rDPwtNM8Q # kurzgesagt – in a nutshell
+              - UC6nSFpj9HTCZ5t-N3Rm3-HA # vsauce
+              - UC6107grRI4m0o2-emgoDnAA # smartereveryday
+              - UCBa659QWEk1AI4Tg--mrJ2A # tom scott
+              - UCwnKziETDbHJtx78nIkfYug # caspianreport
+              - UCmGSJVG3mCRXVOP4yZrU1Dw # johnny harris
+          - type: group
+            widgets:
+              - type: reddit
+                subreddit: technology
+              - type: reddit
+                subreddit: productivity
+                show-thumbnails: true
+      - size: small
+        widgets:
+          - type: weather
+            location: London, United Kingdom
+            units: metric
+            hour-format: 24h
+          - type: clock
+            hour-format: 24h
+            timezones:
+              - timezone: America/Sao_Paulo
+                label: São Paulo
+              - timezone: Europe/Paris
+                label: Paris
+              - timezone: Africa/Johannesburg
+                label: Johannesburg
+              - timezone: Asia/Dubai
+                label: Dubai
+              - timezone: Asia/Tokyo
+                label: Tokyo
+              - timezone: Pacific/Auckland
+                label: Auckland
+          - type: group
+            title: Bookmarks
+            widgets:
+              - type: custom-api
+                title: Bookmarks
+                headers:
+                  User-Agent: Glance-Dashboard
+                template: |
+                  <ul>
+                    {{ range .JSON.Array "" }}
+                      <li>
+                        <a href="{{ .String "html_url" }}" target="_blank" style="color:white;">{{ .String "commit.message" }}</a>
+                      </li>
+                    {{ end }}
+                    <li>
+                      <a href="https://news.ycombinator.com/" target="_blank" style="color:white;">hacker news</a>
+                    </li>
+                    <li>
+                      <a href="https://www.khanacademy.org/" target="_blank" style="color:white;">khan academy</a>
+                    </li>
+                    <li>
+                      <a href="https://www.overleaf.com/" target="_blank" style="color:white;">overleaf</a>
+                    </li>
+                  </ul>
